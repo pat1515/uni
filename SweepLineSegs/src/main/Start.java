@@ -13,7 +13,8 @@ public class Start {
 		// Segmente
 		segmente.add(new Segment(new Punkt(1, 1, PunktTyp.Start), new Punkt(6, 4, PunktTyp.Ende)));		
 		segmente.add(new Segment(new Punkt(2, 4, PunktTyp.Start), new Punkt(4, 1, PunktTyp.Ende)));		
-		segmente.add(new Segment(new Punkt(3, 3, PunktTyp.Start), new Punkt(5, 5, PunktTyp.Ende)));
+		segmente.add(new Segment(new Punkt(3, 4, PunktTyp.Start), new Punkt(5, 5, PunktTyp.Ende)));
+		segmente.add(new Segment(new Punkt(4.5, 6, PunktTyp.Start), new Punkt(5.5, 1, PunktTyp.Ende)));
 		
 		// Strukturen erstellen
 		ES es = new ES();
@@ -46,20 +47,44 @@ public class Start {
 			// Startpunkt
 			if (ereignis.getTyp() == PunktTyp.Start) {
 				
+				sss.Einfuegen(ereignis.Seg, ereignis.Seg.Start.X);
+				Segment Vseg = sss.GetVorg(ereignis.Seg);
+				if (Vseg != null) {
+					sss.TesteSchnittErzeugeEreignis(es, Vseg, ereignis.Seg, i);
+				}
 				
+				Segment Nseg = sss.GetNach(ereignis.Seg);
+				if (Nseg != null) {
+					sss.TesteSchnittErzeugeEreignis(es, ereignis.Seg, Nseg, i);
+				}
 				
 			}
 			// Endpunkt
 			else if (ereignis.getTyp() == PunktTyp.Ende) {
 				
+				Segment Vseg = sss.GetVorg(ereignis.Seg);
+				Segment Nseg = sss.GetNach(ereignis.Seg);
 				
-				
+				sss.Entfernen(ereignis.Seg);
+				if (Vseg != null && Nseg != null)
+					sss.TesteSchnittErzeugeEreignis(es, Vseg, Nseg, i);
 			}
 			// Schnittpunkt
 			else {
 				
+				System.out.println(ereignis.punkt.X + "/" + ereignis.punkt.Y);
+			
+				sss.Vertausche(ereignis.USeg, ereignis.OSeg);
 				
-				
+				Segment Vseg = sss.GetVorg(ereignis.OSeg);
+				if (Vseg != null) {
+					sss.TesteSchnittErzeugeEreignis(es, Vseg, ereignis.OSeg, i);
+				}
+								
+				Segment Nseg = sss.GetNach(ereignis.USeg);
+				if (Nseg != null) {
+					sss.TesteSchnittErzeugeEreignis(es, ereignis.USeg, Nseg, i);
+				}
 			}
 			
 			

@@ -12,6 +12,12 @@ public class Punkt {
 		this.Typ = Typ;
 	}
 	
+	
+	public double distanceTo(Punkt other) {
+		
+		return Math.sqrt(Math.pow(other.X - this.X, 2) + Math.pow(other.Y - this.Y, 2));
+	}
+	
 	public boolean AufSegment(Segment seg) {
 		
 		Punkt a = seg.Start;
@@ -26,7 +32,7 @@ public class Punkt {
 			return false;
 		
 		double squaredlengthba = (b.X - a.X) * (b.X - a.X) + (b.Y - a.Y) * (b.Y - a.Y);   
-		if (dotproduct < squaredlengthba)
+		if (dotproduct > squaredlengthba)
 			return false;
 		
 		return true;

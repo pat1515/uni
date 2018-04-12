@@ -11,9 +11,10 @@ public class PunktComparator implements Comparator<Ereignis> {
 			return -1;
 		else if (arg0.punkt.X > arg1.punkt.X)
 			return 1;
-		else
+		else {
+					
 			return 0;
-		
+		}
 	}
 
 }

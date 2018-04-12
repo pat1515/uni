@@ -10,7 +10,7 @@ public class SSS {
 	
 	
 	
-	public void Einfuegen(Segment seg, int X) {
+	public void Einfuegen(Segment seg, double X) {
 		
 		if (segmente.size() == 0) {
 			segmente.add(seg);
@@ -76,5 +76,34 @@ public class SSS {
 		return null;
 	}
 	
+	
+	void TesteSchnittErzeugeEreignis(ES es, Segment a, Segment b, int i) {
+		
+		Punkt p = a.Schnittpunkt(b);
+		
+		if (p != null) {
+			
+			boolean vorhanden = false;
+			
+			for (int j = 0; j < es.ereignisse.size(); j++) {
+				
+				if (p.distanceTo(es.ereignisse.get(j).punkt) < 1e-8) {
+					vorhanden = true;
+					break;
+				}
+			}
+			
+			
+			if (!vorhanden) {
+				Ereignis ereignis = new Ereignis();
+				ereignis.USeg = a;
+				ereignis.OSeg = b;
+				ereignis.punkt = new Punkt(p.X, p.Y, PunktTyp.Schnitt);
+				
+				es.ereignisse.add(i + 1, ereignis);
+			}
+		}
+		
+	}
 	
 }
